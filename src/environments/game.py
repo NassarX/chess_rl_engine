@@ -1,6 +1,6 @@
 import chess
 import chess.svg
-#import cairosvg
+import cairosvg
 
 from io import BytesIO
 from PIL import Image
