@@ -1,12 +1,12 @@
 import chess
-from src.stockfish.stockfish_player import StockfishPlayer
+from src.agents.stockfish_agent import StockfishAgent
 from src.envs.game import Game
 
 
 class StockfishGame(Game):
     """ Game with a Stockfish AI. The AI will play the opposite color.
     Params:
-        stockfish: Stockfish or str, StockfishPlayer object or path to the binary.
+        stockfish: Stockfish or str, StockfishAgent object or path to the binary.
         player_color: bool, Color of the player.
         board: chess.Board, Board to play.
         date: datetime, Date of the game.
@@ -26,8 +26,8 @@ class StockfishGame(Game):
         stockfish_color = not self.player_color
 
         if type(stockfish) == str:
-            self.stockfish = StockfishPlayer(stockfish_color, stockfish, search_depth=stockfish_depth)
-        elif type(stockfish) == StockfishPlayer:
+            self.stockfish = StockfishAgent(stockfish_color, stockfish, search_depth=stockfish_depth)
+        elif type(stockfish) == StockfishAgent:
             self.stockfish = stockfish
 
     def move(self, movement):
@@ -38,21 +38,26 @@ class StockfishGame(Game):
             movement: str, Movement in UCI notation (f2f3, g8f6...)
         """
         # If stockfish moves first
+        success = False
         if self.stockfish.color and len(self.board.move_stack) == 0:
             stockfish_best_move = self.stockfish.best_move(self)
             self.board.push(chess.Move.from_uci(stockfish_best_move))
+            success = True
         else:
             made_movement = super().move(movement)
             if made_movement and self.get_result() is None:
                 stockfish_best_move = self.stockfish.best_move(self)
                 self.board.push(chess.Move.from_uci(stockfish_best_move))
+                success = True
+
+        return success
 
     def get_copy(self):
         return StockfishGame(board=self.board.copy(), stockfish=self.stockfish)
 
     def tearup(self):
         """ Free resources. This cannot be done in __del__ as the instances
-        will be intensivily cloned but maintaining the same stockfish AI
+        will be intensively cloned but maintaining the same stockfish AI
         engine. We don't want it deleted. Should only be called on the end of
         the program.
         """

@@ -62,4 +62,4 @@ ipython_config.py
 
 src/data/stockfish/*
 src/data/test/*
-src/stockfish/bin/*
+src/stockfish/bin/stockfish

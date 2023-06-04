@@ -1,7 +1,7 @@
 from tensorflow.keras.utils import to_categorical
 import numpy as np
 
-from src.data.game_store import GameStore
+from src.envs.game_store import GameStore
 from src.utils.encoder_decoder import get_uci_labels, get_game_state
 
 

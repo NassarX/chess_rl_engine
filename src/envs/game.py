@@ -35,8 +35,8 @@ class Game:
         Returns:
             success: boolean. Whether the move could be executed
         """
-        # This is to prevent python-chess to put a illegal move in the
-        # move stack before launching the exception
+
+        # This is to prevent python-chess to put illegal move in the stack before launching the exception
         success = False
         if movement in self.get_legal_moves():
             self.board.push(chess.Move.from_uci(movement))

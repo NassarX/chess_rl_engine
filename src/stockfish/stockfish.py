@@ -5,9 +5,9 @@ import argparse
 import numpy as np
 sys.path.append(os.path.abspath("."))
 
-from src.stockfish.stockfish_game import StockfishGame
-from src.stockfish.stockfish_player import StockfishPlayer
-from src.data.game_store import GameStore
+from src.envs.stockfish_game import StockfishGame
+from src.agents.stockfish_agent import StockfishAgent
+from src.envs.game_store import GameStore
 from src.utils.stockfish_helpers import download_stockfish_binary, generate_stockfish_data
 
 
@@ -34,7 +34,7 @@ def play_game(stockfish_bin, dataset, depth=1, tqbar=None, random_dep=False):
 
     # Create game and player
     game = StockfishGame(stockfish=stockfish_bin, player_color=is_white, stockfish_depth=game_depth)
-    stockfish_player = StockfishPlayer(is_white, stockfish_bin, player_depth)
+    stockfish_player = StockfishAgent(is_white, stockfish_bin, player_depth)
 
     # While game is not over
     while game.get_result() is None:
@@ -75,7 +75,7 @@ class Stockfish:
             self.depth = 1
 
         if dest_path is None:
-            dest_dir = os.path.join(os.getcwd(), "src", "data", "stockfish")
+            dest_dir = os.path.join(os.getcwd(), "src", "stockfish", "data")
             os.makedirs(dest_dir, exist_ok=True)
             dest_path = os.path.join(dest_dir, 'dataset.json')
 

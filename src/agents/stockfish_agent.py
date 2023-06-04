@@ -2,13 +2,13 @@ import chess
 import chess.engine
 import logging
 from src.envs.game import Game
-from src.envs.player import Player
+from src.agents.agent import Agent
 
 # Remove annoying warnings of the engine.
 chess.engine.LOGGER.setLevel(logging.ERROR)
 
 
-class StockfishPlayer(Player):
+class StockfishAgent(Agent):
     """ AI using Stockfish to play a game of chess.
     Params:
         color: bool, Color of the player.
@@ -35,6 +35,9 @@ class StockfishPlayer(Player):
         # Page 77 of http://web.ist.utl.pt/diogo.ferreira/papers/ferreira13impact.pdf
         # gives some study about the relation of search depth vs ELO.
         result = self.engine.play(game.board, chess.engine.Limit(depth=5))
+        if result.move is None:
+            return Game.NULL_MOVE
+
         return result.move.uci()
 
     def kill(self):
