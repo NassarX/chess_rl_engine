@@ -11,21 +11,19 @@ from src.utils.stockfish_helpers import download_stockfish_binary, generate_stoc
 
 def test_stockfish_download():
     # Test if the stockfish binary is downloaded successfully
-    dest_path = "src/stockfish/bin/test"
-    download_stockfish_binary(dest_path)
-    assert os.path.exists(dest_path)
-
-    # Clean up the generated data file
-    shutil.rmtree(dest_path)
+    binary_dir = "src/stockfish/bin/test"
+    download_stockfish_binary(binary_dir)
+    assert os.path.exists(binary_dir)
 
 
 def test_generate_stockfish_data():
     # Test if the stockfish data generation is successful
     save_path = "src/stockfish/data/test_stockfish_data.json"
+    binary_path = "src/stockfish/bin/test/stockfish"
     generate_stockfish_data(
         callback_game=play_game,
         dataset=GameStore(),
-        stockfish_bin="src/stockfish/bin/stockfish",
+        stockfish_bin=binary_path,
         dest_path=save_path,
         depth=1,
         random_depth=False,
@@ -41,8 +39,12 @@ def test_generate_stockfish_data():
 
 
 def test_stockfish_agent():
+
+    # binary path
+    binary_path = "src/stockfish/bin/test/stockfish"
+
     # Set up the stockfish player
-    stockfish_player = StockfishAgent(color=Game.BLACK, binary_path="src/stockfish/bin/stockfish")
+    stockfish_player = StockfishAgent(color=Game.BLACK, binary_path=binary_path)
 
     # Set up the stockfish game instance
     stockfish_game = StockfishGame(player_color=Game.WHITE, stockfish=stockfish_player)
@@ -55,3 +57,7 @@ def test_stockfish_agent():
 
     # Kill the stockfish player
     stockfish_game.tearup()
+
+    # Clean up the generated data file
+    shutil.rmtree("src/stockfish/bin/test")
+
