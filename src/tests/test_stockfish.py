@@ -18,8 +18,9 @@ def test_stockfish_download():
 
 def test_generate_stockfish_data():
     # Test if the stockfish data generation is successful
-    save_path = "src/stockfish/data/test_stockfish_data.json"
     binary_path = "src/stockfish/bin/test/stockfish"
+    save_path = "src/stockfish/data/test_stockfish_data.json"
+    os.makedirs("src/stockfish/data", exist_ok=True)
     generate_stockfish_data(
         callback_game=play_game,
         dataset=GameStore(),
@@ -35,7 +36,7 @@ def test_generate_stockfish_data():
     assert os.path.exists(save_path)
 
     # Clean up the generated data file
-    os.remove(save_path)
+    shutil.rmtree("src/stockfish/data")
 
 
 def test_stockfish_agent():
