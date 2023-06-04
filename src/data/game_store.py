@@ -1,5 +1,5 @@
 import json
-from src.environments.game import Game
+from src.envs.game import Game
 
 
 class GameStore:
@@ -18,12 +18,12 @@ class GameStore:
         if games is not None:
             self.games = games
 
-    def augment_game(self, game_base):
+    def augment_game(self, game: Game):
         """ Expands a game. For the N movements of a game, it creates
         N games with each state + the final result of the original game +
         the next movement (in each state).
         """
-        hist = game_base.get_history()
+        hist = game.get_history()
         moves = hist['moves']
         result = hist['result']
         date = hist['date']

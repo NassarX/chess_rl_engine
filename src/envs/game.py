@@ -1,19 +1,16 @@
+from datetime import datetime
+
 import chess
 import chess.svg
-import cairosvg
-
-from io import BytesIO
-from PIL import Image
-from matplotlib import pyplot as plt
-from datetime import datetime
+from IPython.display import SVG, display
 
 
 class Game:
-    """This is the base class to represent a game. It is the simplest; contains a python-chess board which holds the
+    """This is the base class to represent a game. It contains a python-chess board which holds the
     moves made, the player color (POV of the game) and the date when the game was played. Also, this class implements
     the logic to get the state of the game (`get_result()` or `get_legal_moves()`). **After each call to the `move()`
     method, the turn will be switched**. This is intended as a way to allow users to decouple the agent play logic
-    from this class (though you can extend this class, being `GameAgent` or `GameStockfish` examples of this).
+    from this class (though you can extend this class, being `AgentGame` or `StockfishGame` examples of this).
     """
     NULL_MOVE = '00000'
     WHITE = chess.WHITE
@@ -121,17 +118,8 @@ class Game:
             save_path: str, where to save the image. None if you want to plot
             on the screen only
         """
-        svg = chess.svg.board(self.board)
-        out = BytesIO()
-        cairosvg.svg2png(svg, write_to=out)
-        image = Image.open(out)
-        if save_path is None:
-            plt.ion()
-            with plt.style.context("seaborn-dark"):
-                fig, ax = plt.subplots(num="game")
-                ax.imshow(image)
-                ax.axis('off')
-                plt.draw()
-                # plt.show()
-        else:
-            image.save(save_path)
+        # Generate SVG representation of the board
+        svg = chess.svg.board(board=self.board)
+
+        # Display the SVG using IPython's display function
+        display(SVG(svg))
