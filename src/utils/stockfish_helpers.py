@@ -81,3 +81,4 @@ def generate_stockfish_data(callback_game, dataset, stockfish_bin, dest_path, de
 
     print("Saving dataset...")
     dataset.save(dest_path)
+    print(f"Dataset saved to {dest_path}")

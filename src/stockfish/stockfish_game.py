@@ -1,6 +1,6 @@
 import chess
 from src.stockfish.stockfish_player import StockfishPlayer
-from src.environments.game import Game
+from src.envs.game import Game
 
 
 class StockfishGame(Game):
@@ -32,7 +32,8 @@ class StockfishGame(Game):
 
     def move(self, movement):
         """ Makes a move. If it's not your turn, Stockfish will play and if
-    the move is illegal, it will be ignored.
+            the move is illegal, it will be ignored.
+
         Params:
             movement: str, Movement in UCI notation (f2f3, g8f6...)
         """

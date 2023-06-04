@@ -2,9 +2,8 @@ import os
 import shutil
 import time
 import numpy as np
-from src.environments.game import Game
+from src.envs.game import Game
 from src.data.data_generator import GameStore, DataGenerator
-
 
 
 def test_game_store_loads():

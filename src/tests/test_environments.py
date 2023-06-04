@@ -1,4 +1,4 @@
-from src.environments.game import Game
+from src.envs.game import Game
 
 
 def test_move():

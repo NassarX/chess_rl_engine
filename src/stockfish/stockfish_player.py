@@ -1,8 +1,8 @@
 import chess
 import chess.engine
 import logging
-from src.environments.game import Game
-from src.environments.player import Player
+from src.envs.game import Game
+from src.envs.player import Player
 
 # Remove annoying warnings of the engine.
 chess.engine.LOGGER.setLevel(logging.ERROR)

@@ -1,6 +1,6 @@
 import numpy as np
 
-from src.environments.game import Game
+from src.envs.game import Game
 from src.utils.encoder_decoder import get_game_history, get_game_state, get_uci_labels, get_current_game_state
 
 
